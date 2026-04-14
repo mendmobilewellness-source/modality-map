@@ -113,7 +113,7 @@ export default function Home() {
   ) || (query === '' ? QUICK_FILTERS[0] : null);
 
   const filtered = useMemo(() => {
-    const normalize = (s) => s.toLowerCase().replace(/[-–]/g, ' ').replace(/\s+/g, ' ').trim();
+    const normalize = (s) => s.toLowerCase().replace(/[\s\-–_]/g, '');
     const q = normalize(query);
     let list = q
       ? businesses.filter((b) =>

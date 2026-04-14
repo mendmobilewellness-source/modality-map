@@ -962,7 +962,7 @@ function buildInitialSelections(scanResult) {
   const compounds   = new Set();
   const allItems    = COMPOUND_GROUPS.flatMap(g => g.items);
 
-  const normalize = (s) => s.toLowerCase().replace(/[-–]/g, ' ').replace(/\s+/g, ' ').trim();
+  const normalize = (s) => s.toLowerCase().replace(/[\s\-–_]/g, '');
 
   // Apply synonym map (case-insensitive exact key match)
   function resolveSynonym(name) {
@@ -1603,7 +1603,7 @@ function CategoryGroup({
 }) {
   const { name, modalities } = category;
 
-  const normalize = (s) => s.toLowerCase().replace(/[-–]/g, ' ').replace(/\s+/g, ' ').trim();
+  const normalize = (s) => s.toLowerCase().replace(/[\s\-–_]/g, '');
   const q = normalize(searchQuery);
   const displayedModalities = q
     ? modalities.filter(m => normalize(m).includes(q))
