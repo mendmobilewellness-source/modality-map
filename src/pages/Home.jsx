@@ -9,51 +9,174 @@ import './Home.css';
 // Keys and values are both normalized (lowercase, no spaces/hyphens) at search time.
 // Map common shorthand → the canonical term to search for.
 const SEARCH_SYNONYMS = {
-  // IV
+  // ── IV Therapy ──
   'iv': 'ivtherapy',
   'ivs': 'ivtherapy',
-  'ivsdrip': 'ivtherapy',
   'ivdrip': 'ivtherapy',
   'drip': 'ivtherapy',
-  // Cryotherapy
+  'drips': 'ivtherapy',
+  'infusion': 'ivtherapy',
+  'vitamindrip': 'ivtherapy',
+  'myerscocktail': 'ivtherapy',
+  'myers': 'ivtherapy',
+
+  // ── Cryotherapy ──
   'cryo': 'cryotherapy',
-  'coldplunge': 'coldwaterimmersion',
+  'freeze': 'cryotherapy',
+  'freezing': 'cryotherapy',
+  'cryochamber': 'cryotherapy',
+  'wbc': 'cryotherapy',
+  'wholebodycryo': 'cryotherapy',
+  'coldplunge': 'coldwater',
+  'coldtub': 'coldwater',
+  'icebath': 'coldwater',
+  'iceplunge': 'coldwater',
+  'coldwater': 'coldwater',
   'coldtherapy': 'cryotherapy',
-  // Red light
-  'redlight': 'redlighttherapy',
-  'rlt': 'redlighttherapy',
-  'infrared': 'infraredsauna',
-  // Hyperbaric
-  'hbot': 'hyperbaricoxygen',
-  'hyperbaric': 'hyperbaricoxygen',
-  'oxygentherapy': 'hyperbaricoxygen',
-  // NAD
-  'nad': 'nad+',
-  // Sauna
+
+  // ── Red Light Therapy ──
+  'redlight': 'redlight',
+  'rlt': 'redlight',
+  'pbm': 'photobiomodulation',
+  'lllt': 'photobiomodulation',
+  'lowlevellaser': 'photobiomodulation',
+  'photobiomodulation': 'photobiomodulation',
+
+  // ── Infrared Sauna ──
+  'infrared': 'infrared',
+  'irsauna': 'infrared',
+  'farinfrared': 'infrared',
+  'fir': 'infrared',
+
+  // ── Sauna (general) ──
   'sauna': 'sauna',
-  'irsauna': 'infraredsauna',
-  // Peptides
+  'steam': 'sauna',
+  'sweat': 'sauna',
+  'steamroom': 'sauna',
+  'finnishsauna': 'sauna',
+
+  // ── Hyperbaric ──
+  'hbot': 'hyperbaric',
+  'hyperbaric': 'hyperbaric',
+  'oxygenchamber': 'hyperbaric',
+  'oxygentherapy': 'hyperbaric',
+  'pressurechamber': 'hyperbaric',
+  'chamber': 'hyperbaric',
+
+  // ── NAD+ ──
+  'nad': 'nad',
+  'nadplus': 'nad',
+  'nicotinamide': 'nad',
+
+  // ── Peptides ──
+  'peptide': 'peptide',
   'peptides': 'peptide',
-  'bpc': 'bpc157',
-  'sermorelin': 'sermorelin',
-  // PEMF
+  'bpc': 'bpc',
+  'growthhormone': 'peptide',
+  'gh': 'growthhormone',
+  'ipamorelin': 'ipamorelin',
+  'cjc': 'cjc',
+  'tb4': 'thymosin',
+  'tb500': 'thymosin',
+  'thymosin': 'thymosin',
+  'ghk': 'ghk',
+  'tesamorelin': 'tesamorelin',
+
+  // ── PEMF ──
   'pemf': 'pemf',
-  // Float
-  'float': 'floattherapy',
-  'floattank': 'floattherapy',
+  'pulsed': 'pemf',
+  'electromagnetic': 'pemf',
+
+  // ── Float Therapy ──
+  'float': 'float',
+  'floating': 'float',
+  'floattank': 'float',
+  'floatation': 'float',
   'sensory': 'sensorydeprivation',
-  'isolation': 'sensorydeprivation',
-  // Ozone
-  'ozone': 'ozonetherapy',
-  // Lymphatic
-  'lymphatic': 'lymphaticdrainage',
-  // Neural / brain
-  'neurofeedback': 'neurofeedback',
+  'sensorydep': 'sensorydeprivation',
+  'isolationtank': 'sensorydeprivation',
+  'deprivation': 'sensorydeprivation',
+
+  // ── Ozone ──
+  'ozone': 'ozone',
+  'o3': 'ozone',
+  'ozonation': 'ozone',
+
+  // ── Lymphatic / Compression ──
+  'lymphatic': 'lymphatic',
+  'lymph': 'lymphatic',
+  'compression': 'compression',
+  'normatec': 'compression',
+  'recoveryboots': 'compression',
+  'boots': 'compression',
+  'pressotherapy': 'compression',
+
+  // ── Neurofeedback / Brain ──
+  'braintraining': 'neurofeedback',
+  'eeg': 'neurofeedback',
+  'qeeg': 'neurofeedback',
+  'biofeedback': 'biofeedback',
+
+  // ── TMS ──
   'tms': 'tms',
-  // Massage
+  'transcranial': 'tms',
+  'brainstimulation': 'tms',
+
+  // ── Laser ──
+  'laser': 'laser',
+  'coldlaser': 'laser',
+  'softlaser': 'laser',
+
+  // ── Halotherapy ──
+  'salt': 'halotherapy',
+  'saltroom': 'halotherapy',
+  'saltcave': 'halotherapy',
+  'salttherapy': 'halotherapy',
+  'halo': 'halotherapy',
+
+  // ── Massage ──
   'massage': 'massage',
-  // Laser
-  'laser': 'lasertherapy',
+  'bodywork': 'massage',
+  'deeptissue': 'massage',
+  'swedish': 'massage',
+  'sportsmassage': 'massage',
+
+  // ── Vibration ──
+  'vibration': 'vibration',
+  'wbv': 'vibration',
+  'powerplate': 'vibration',
+
+  // ── Chiropractic ──
+  'chiro': 'chiropractic',
+  'chiropractor': 'chiropractic',
+  'adjustment': 'chiropractic',
+  'spinal': 'chiropractic',
+
+  // ── Acupuncture ──
+  'acupuncture': 'acupuncture',
+  'acupuncturist': 'acupuncture',
+  'dryneedling': 'acupuncture',
+  'needling': 'acupuncture',
+  'tcm': 'acupuncture',
+
+  // ── PRP ──
+  'prp': 'prp',
+  'platelet': 'prp',
+
+  // ── Stem Cells / Exosomes ──
+  'stemcell': 'stem',
+  'stemcells': 'stem',
+  'exosomes': 'exosome',
+  'exosome': 'exosome',
+
+  // ── Cupping ──
+  'cupping': 'cupping',
+  'cups': 'cupping',
+
+  // ── Nutrition ──
+  'nutrition': 'nutrition',
+  'nutritionist': 'nutrition',
+  'dietitian': 'nutrition',
 };
 
 const QUICK_FILTERS = [
