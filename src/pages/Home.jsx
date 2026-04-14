@@ -6,6 +6,56 @@ import MapView from '../components/MapView';
 import { supabase } from '../lib/supabase';
 import './Home.css';
 
+// Keys and values are both normalized (lowercase, no spaces/hyphens) at search time.
+// Map common shorthand → the canonical term to search for.
+const SEARCH_SYNONYMS = {
+  // IV
+  'iv': 'ivtherapy',
+  'ivs': 'ivtherapy',
+  'ivsdrip': 'ivtherapy',
+  'ivdrip': 'ivtherapy',
+  'drip': 'ivtherapy',
+  // Cryotherapy
+  'cryo': 'cryotherapy',
+  'coldplunge': 'coldwaterimmersion',
+  'coldtherapy': 'cryotherapy',
+  // Red light
+  'redlight': 'redlighttherapy',
+  'rlt': 'redlighttherapy',
+  'infrared': 'infraredsauna',
+  // Hyperbaric
+  'hbot': 'hyperbaricoxygen',
+  'hyperbaric': 'hyperbaricoxygen',
+  'oxygentherapy': 'hyperbaricoxygen',
+  // NAD
+  'nad': 'nad+',
+  // Sauna
+  'sauna': 'sauna',
+  'irsauna': 'infraredsauna',
+  // Peptides
+  'peptides': 'peptide',
+  'bpc': 'bpc157',
+  'sermorelin': 'sermorelin',
+  // PEMF
+  'pemf': 'pemf',
+  // Float
+  'float': 'floattherapy',
+  'floattank': 'floattherapy',
+  'sensory': 'sensorydeprivation',
+  'isolation': 'sensorydeprivation',
+  // Ozone
+  'ozone': 'ozonetherapy',
+  // Lymphatic
+  'lymphatic': 'lymphaticdrainage',
+  // Neural / brain
+  'neurofeedback': 'neurofeedback',
+  'tms': 'tms',
+  // Massage
+  'massage': 'massage',
+  // Laser
+  'laser': 'lasertherapy',
+};
+
 const QUICK_FILTERS = [
   { label: 'All',        icon: '✦',  query: '' },
   { label: 'Red Light',  icon: '🔴', query: 'Red Light' },
@@ -114,13 +164,15 @@ export default function Home() {
 
   const filtered = useMemo(() => {
     const normalize = (s) => s.toLowerCase().replace(/[\s\-–_]/g, '');
-    const q = normalize(query);
+    const raw = normalize(query);
+    const q = SEARCH_SYNONYMS[raw] || raw;
+    const matchField = (val) => normalize(val || '').includes(q);
     let list = q
       ? businesses.filter((b) =>
-          normalize(b.name || '').includes(q) ||
-          normalize(b.city || '').includes(q) ||
-          normalize(b.state || '').includes(q) ||
-          b.modalities.some((m) => normalize(m.name).includes(q))
+          matchField(b.name) ||
+          matchField(b.city) ||
+          matchField(b.state) ||
+          b.modalities.some((m) => matchField(m.name))
         )
       : [...businesses];
 
