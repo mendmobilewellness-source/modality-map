@@ -1,0 +1,351 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26,26,46,0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: overlayIn 0.2s ease;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Mobile: bottom sheet (85vh, slides up) ── */
+.modal-sheet {
+  background: var(--white);
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-width: 100%;
+  height: 85vh;
+  position: relative;
+  animation: sheetUp 0.3s cubic-bezier(0.32,0.72,0,1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@keyframes sheetUp {
+  from { transform: translateY(60px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── Desktop: centered modal ── */
+@media (min-width: 640px) {
+  .modal-overlay { align-items: center; }
+  .modal-sheet {
+    border-radius: var(--radius-xl);
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    max-height: 90vh;
+    animation: sheetIn 0.25s cubic-bezier(0.32,0.72,0,1);
+  }
+  @keyframes sheetIn {
+    from { transform: scale(0.96); opacity: 0; }
+    to   { transform: scale(1);    opacity: 1; }
+  }
+  .modal-drag-handle { display: none; }
+}
+
+/* ── Drag handle (mobile only) ── */
+.modal-drag-handle {
+  width: 36px;
+  height: 4px;
+  background: var(--border-dark);
+  border-radius: 2px;
+  margin: 10px auto 0;
+  flex-shrink: 0;
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 10;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s, color 0.12s;
+  box-shadow: var(--shadow-sm);
+}
+
+.modal-close:hover {
+  background: var(--border-dark);
+  color: var(--text-dark);
+}
+
+/* Coral top stripe */
+.modal-stripe {
+  height: 5px;
+  background: var(--coral);
+  flex-shrink: 0;
+}
+
+.modal-content {
+  padding: 20px 20px 32px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 640px) {
+  .modal-content { padding: 22px 24px 32px; }
+}
+
+.modal-header {
+  padding-right: 28px;
+}
+
+.modal-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.modal-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-dark);
+  letter-spacing: -0.4px;
+  line-height: 1.2;
+}
+
+@media (min-width: 640px) {
+  .modal-name { font-size: 22px; }
+}
+
+.modal-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #15803D;
+  background: #F0FDF4;
+  padding: 3px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.modal-location {
+  font-size: 13px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+/* ── Status badges ── */
+.modal-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.modal-hours-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.modal-hours-badge.open {
+  background: #F0FDF4;
+  color: #15803D;
+}
+
+.modal-hours-badge.closed {
+  background: var(--border);
+  color: var(--text-muted);
+}
+
+.modal-hours-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.modal-hours-badge.open .modal-hours-dot  { background: #15803D; }
+.modal-hours-badge.closed .modal-hours-dot { background: var(--text-light); }
+
+.modal-walkin-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.modal-walkin-badge.welcome {
+  background: #EFF6FF;
+  color: #1D4ED8;
+}
+
+.modal-walkin-badge.appt {
+  background: #FFF7ED;
+  color: #C2410C;
+}
+
+.modal-description {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* ── Hours table ── */
+.modal-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+
+.modal-hours {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-hours-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.modal-hours-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  font-size: 13px;
+  background: var(--white);
+}
+
+.modal-hours-row.today {
+  background: var(--coral-light);
+}
+
+.modal-hours-day {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.modal-hours-row.today .modal-hours-day {
+  color: var(--coral-dark);
+  font-weight: 700;
+}
+
+.modal-hours-time {
+  color: var(--text-muted);
+}
+
+.modal-hours-row.today .modal-hours-time {
+  color: var(--coral-dark);
+  font-weight: 600;
+}
+
+/* Offerings */
+.modal-offerings {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-group-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-light);
+}
+
+.modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Contact */
+.modal-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  padding-top: 18px;
+}
+
+.modal-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  min-height: 48px;
+  background: var(--border);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+  text-decoration: none;
+  transition: background 0.12s;
+}
+
+.modal-contact-item:hover { background: var(--border-dark); }
+
+.modal-contact-directions {
+  background: #EFF6FF;
+  color: #1D4ED8;
+}
+
+.modal-contact-directions:hover { background: #DBEAFE; }
+
+.modal-contact-website {
+  background: var(--coral-light);
+  color: var(--coral-dark);
+}
+
+.modal-contact-website:hover { background: #FFE4DA; }
+
+.modal-contact-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}

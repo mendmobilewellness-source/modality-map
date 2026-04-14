@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --coral:        #FF6B4A;
+  --coral-dark:   #E5512F;
+  --coral-light:  #FFF0EC;
+  --coral-mid:    #FF8C42;
+  --white:        #FFFFFF;
+  --bg:           #FFFFFF;
+  --border:       #F3F4F6;
+  --border-dark:  #E5E7EB;
+  --text-dark:    #1A1A2E;
+  --text-muted:   #6B7280;
+  --text-light:   #9CA3AF;
+
+  --shadow-card:  0 2px 12px rgba(26,26,46,0.06), 0 1px 3px rgba(26,26,46,0.04);
+  --shadow-hover: 0 8px 32px rgba(26,26,46,0.12), 0 2px 8px rgba(26,26,46,0.06);
+  --shadow-sm:    0 1px 4px rgba(26,26,46,0.08);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Badge colors */
+  --badge-modality-bg:   #FFF0EC;
+  --badge-modality-text: #C94A2B;
+  --badge-device-bg:     #EFF6FF;
+  --badge-device-text:   #1D4ED8;
+  --badge-peptide-bg:    #F0FDF4;
+  --badge-peptide-text:  #15803D;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text-dark);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--coral);
+  text-decoration: none;
+}
+
+button {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input, textarea, select {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

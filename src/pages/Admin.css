@@ -1,0 +1,408 @@
+.admin-page {
+  flex: 1;
+  background: var(--bg);
+  padding: 28px 16px 64px;
+}
+
+/* ── Login ───────────────────────────────── */
+.admin-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+}
+
+.admin-login-card {
+  background: var(--white);
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-lg);
+  padding: 40px 32px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+}
+
+.admin-login-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: var(--coral-light);
+  color: var(--coral);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.admin-login-card h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+  letter-spacing: -0.3px;
+}
+
+.admin-login-card p {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ── Shared field styles ─────────────────── */
+.field-input {
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-dark);
+  background: var(--white);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  width: 100%;
+}
+
+.field-input:focus {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(255,107,74,0.1);
+}
+
+.field-input.error { border-color: #E53E3E; }
+
+.field-error {
+  font-size: 12px;
+  color: #E53E3E;
+  font-weight: 600;
+  text-align: left;
+}
+
+.btn-primary {
+  background: var(--coral);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 11px 22px;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  text-align: center;
+  transition: background 0.15s;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+}
+
+.btn-primary:hover { background: var(--coral-dark); color: #fff; }
+
+/* ── Main layout ─────────────────────────── */
+.admin-container {
+  max-width: 780px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.admin-header h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-dark);
+  letter-spacing: -0.4px;
+}
+
+.btn-logout {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-sm);
+  padding: 7px 14px;
+  background: var(--white);
+  transition: all 0.12s;
+  cursor: pointer;
+}
+
+.btn-logout:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+}
+
+/* ── Tabs ────────────────────────────────── */
+.admin-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid var(--border-dark);
+  margin-bottom: 24px;
+}
+
+.admin-tab {
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.12s;
+  cursor: pointer;
+}
+
+.admin-tab:hover { color: var(--coral); }
+
+.admin-tab.active {
+  color: var(--coral);
+  border-bottom-color: var(--coral);
+}
+
+.tab-count {
+  background: var(--border);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 10px;
+  border: 1px solid var(--border-dark);
+}
+
+.tab-count-alert {
+  background: var(--coral);
+  color: #fff;
+  border-color: var(--coral);
+}
+
+/* ── Cards ───────────────────────────────── */
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.admin-card {
+  background: var(--white);
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+.admin-card-live {
+  border-left: 3px solid var(--coral);
+}
+
+.admin-card-rejected {
+  opacity: 0.6;
+}
+
+.admin-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.admin-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--coral-light);
+  color: var(--coral);
+  font-size: 18px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.admin-avatar-live {
+  background: #F0FDF4;
+  color: #15803D;
+}
+
+.admin-avatar-rejected {
+  background: var(--border);
+  color: var(--text-light);
+}
+
+.admin-card-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-dark);
+  letter-spacing: -0.2px;
+}
+
+.admin-card-location {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.admin-card-date {
+  font-size: 11px;
+  color: var(--text-light);
+  margin-top: 2px;
+}
+
+.status-badge {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.status-live {
+  background: #F0FDF4;
+  color: #15803D;
+}
+
+.status-rejected {
+  background: #FFF5F5;
+  color: #C53030;
+}
+
+.admin-card-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.admin-card-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.admin-card-contact a {
+  color: var(--coral);
+  font-weight: 600;
+}
+
+.admin-card-offerings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-offering-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-light);
+}
+
+.admin-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.admin-no-tags {
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+/* shared tag styles */
+.card-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tag-modality {
+  background: var(--badge-modality-bg);
+  color: var(--badge-modality-text);
+}
+
+.tag-device {
+  background: var(--badge-device-bg);
+  color: var(--badge-device-text);
+}
+
+.tag-compound {
+  background: var(--badge-peptide-bg);
+  color: var(--badge-peptide-text);
+}
+
+.admin-card-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  border-top: 1px solid var(--border-dark);
+  padding-top: 14px;
+}
+
+.btn-approve {
+  background: var(--coral);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 20px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-approve:hover { background: var(--coral-dark); }
+
+.btn-reject {
+  background: var(--white);
+  color: #C53030;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 16px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid #FEB2B2;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-reject:hover { background: #FFF5F5; }
+
+.admin-loading {
+  text-align: center;
+  padding: 56px 20px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.admin-load-error {
+  background: #FFF5F5;
+  border: 1px solid #FED7D7;
+  color: #C53030;
+  font-size: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  margin-bottom: 16px;
+}
+
+.admin-empty {
+  text-align: center;
+  padding: 56px 20px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
