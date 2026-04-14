@@ -962,11 +962,13 @@ function buildInitialSelections(scanResult) {
   const compounds   = new Set();
   const allItems    = COMPOUND_GROUPS.flatMap(g => g.items);
 
+  const normalize = (s) => s.toLowerCase().replace(/[-–]/g, ' ').replace(/\s+/g, ' ').trim();
+
   // Apply synonym map (case-insensitive exact key match)
   function resolveSynonym(name) {
-    const lower = name.toLowerCase().trim();
+    const lower = normalize(name);
     for (const [syn, canonical] of Object.entries(SYNONYMS)) {
-      if (lower === syn.toLowerCase()) return canonical;
+      if (lower === normalize(syn)) return canonical;
     }
     return name;
   }
@@ -975,18 +977,18 @@ function buildInitialSelections(scanResult) {
   // No partial/fuzzy fallback — if it's not in SYNONYMS or exactly in TOP_MODALITIES, it is rejected.
   function findModality(raw) {
     const resolved = resolveSynonym(raw);
-    const lower    = resolved.toLowerCase().trim();
-    return TOP_MODALITIES.find(m => m.toLowerCase() === lower) || null;
+    const lower    = normalize(resolved);
+    return TOP_MODALITIES.find(m => normalize(m) === lower) || null;
   }
 
   // STRICT compound match: synonym → exact match, then narrow contains check.
   function findCompound(raw) {
     const resolved = resolveSynonym(raw);
-    const lower    = resolved.toLowerCase().trim();
-    const exact    = allItems.find(item => item.toLowerCase() === lower);
+    const lower    = normalize(resolved);
+    const exact    = allItems.find(item => normalize(item) === lower);
     if (exact) return exact;
     if (lower.length >= 4) {
-      const partial = allItems.find(item => item.toLowerCase().includes(lower));
+      const partial = allItems.find(item => normalize(item).includes(lower));
       if (partial) return partial;
     }
     return null;
@@ -994,8 +996,8 @@ function buildInitialSelections(scanResult) {
 
   // Strict device/type match: exact or canonical-contains-term only
   function matchesLabel(label, raw) {
-    const resolved = resolveSynonym(raw).toLowerCase().trim();
-    const ll = label.toLowerCase();
+    const resolved = normalize(resolveSynonym(raw));
+    const ll = normalize(label);
     return ll === resolved || ll.includes(resolved);
   }
 
@@ -1601,9 +1603,10 @@ function CategoryGroup({
 }) {
   const { name, modalities } = category;
 
-  const q = searchQuery.toLowerCase().trim();
+  const normalize = (s) => s.toLowerCase().replace(/[-–]/g, ' ').replace(/\s+/g, ' ').trim();
+  const q = normalize(searchQuery);
   const displayedModalities = q
-    ? modalities.filter(m => m.toLowerCase().includes(q))
+    ? modalities.filter(m => normalize(m).includes(q))
     : modalities;
 
   // Hide entirely when searching with no matches

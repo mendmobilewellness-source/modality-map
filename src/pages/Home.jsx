@@ -82,9 +82,10 @@ export default function Home() {
   const [locating, setLocating]               = useState(false);
   const [hoveredCardId, setHoveredCardId]     = useState(null);
   const [hoveredPinId, setHoveredPinId]       = useState(null);
-  const inputRef  = useRef(null);
-  const cardRefs  = useRef({});
+  const inputRef     = useRef(null);
+  const cardRefs     = useRef({});
   const mapCenterRef = useRef(null);
+  const resultsRef   = useRef(null);
 
   // Fetch approved businesses from Supabase on mount
   useEffect(() => {
@@ -112,13 +113,14 @@ export default function Home() {
   ) || (query === '' ? QUICK_FILTERS[0] : null);
 
   const filtered = useMemo(() => {
-    const q = query.toLowerCase().trim();
+    const normalize = (s) => s.toLowerCase().replace(/[-–]/g, ' ').replace(/\s+/g, ' ').trim();
+    const q = normalize(query);
     let list = q
       ? businesses.filter((b) =>
-          b.name?.toLowerCase().includes(q) ||
-          b.city?.toLowerCase().includes(q) ||
-          b.state?.toLowerCase().includes(q) ||
-          b.modalities.some((m) => m.name.toLowerCase().includes(q))
+          normalize(b.name || '').includes(q) ||
+          normalize(b.city || '').includes(q) ||
+          normalize(b.state || '').includes(q) ||
+          b.modalities.some((m) => normalize(m.name).includes(q))
         )
       : [...businesses];
 
@@ -206,6 +208,12 @@ export default function Home() {
                 className="hero-search-input"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && query) {
+                    const top = resultsRef.current?.getBoundingClientRect().top + window.scrollY - 12;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                  }
+                }}
                 placeholder="Search NAD+, Red Light Therapy, PEMF…"
               />
               {query && (
@@ -215,7 +223,14 @@ export default function Home() {
                   </svg>
                 </button>
               )}
-              <button className="hero-search-btn" type="button" onClick={() => inputRef.current?.focus()}>
+              <button className="hero-search-btn" type="button" onClick={() => {
+                if (query) {
+                  const top = resultsRef.current?.getBoundingClientRect().top + window.scrollY - 12;
+                  window.scrollTo({ top, behavior: 'smooth' });
+                } else {
+                  inputRef.current?.focus();
+                }
+              }}>
                 Search
               </button>
             </div>
@@ -289,7 +304,7 @@ export default function Home() {
       </section>
 
       {/* ── Content ── */}
-      <div className="home-content">
+      <div className="home-content" ref={resultsRef}>
 
         {/* Quick filters */}
         <div className="quick-filters-wrap">
